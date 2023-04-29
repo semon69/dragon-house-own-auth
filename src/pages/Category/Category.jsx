@@ -5,7 +5,6 @@ import SignleCategory from '../SignleCategory/SignleCategory';
 const Category = () => {
     const {id} = useParams();
     const newsCategories = useLoaderData();
-    console.log(newsCategories)
     return (
         <div>
             {id && <h1>Total news in this category {newsCategories.length}</h1>}

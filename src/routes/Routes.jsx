@@ -11,14 +11,16 @@ import NewsLayout from "../layouts/NewsLayout";
 import NewsPage from "../pages/NewsPage/NewsPage";
 import Register from "../pages/Register/Register";
 import LoginLayout from "../layouts/LoginLayout";
+import PrivateRoute from "./PrivateRoute";
+import Terms from "../pages/Terms/Terms";
 const router = createBrowserRouter([
     {
         path: "/",
         element: <LoginLayout></LoginLayout>,
         children: [
             {
-                path:'/',
-                element: <Navigate to = '/category/0'></Navigate>
+                path: '/',
+                element: <Navigate to='/category/0'></Navigate>
             },
             {
                 path: '/login',
@@ -26,7 +28,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/register',
-                element:<Register></Register>
+                element: <Register></Register>
+            },
+            {
+                path: '/terms',
+                element: <Terms></Terms>
             }
         ]
     },
@@ -39,22 +45,24 @@ const router = createBrowserRouter([
             //     element: <Category></Category>,
             //     loader: () => fetch('http://localhost:5000/news')
             // },
-            
+
             {
                 path: ":id",
                 element: <Category></Category>,
-                loader: ({params}) => fetch(`http://localhost:5000/categories/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5000/categories/${params.id}`)
             }
         ]
     },
     {
         path: "/news",
         element: <NewsLayout></NewsLayout>,
-        children:[
+        children: [
             {
                 path: "/news/:id",
-                element: <NewsPage></NewsPage>,
-                loader: ({params}) => fetch(`http://localhost:5000/news/${params.id}`)
+                element: <PrivateRoute>
+                    <NewsPage></NewsPage>
+                </PrivateRoute>,
+                loader: ({ params }) => fetch(`http://localhost:5000/news/${params.id}`)
             }
         ]
     }

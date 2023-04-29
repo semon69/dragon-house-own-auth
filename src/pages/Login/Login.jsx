@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../provider/AuthProvider';
 
 const Login = () => {
+    const { signIn } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
+
+    const handleLogin = event => {
+        event.preventDefault()
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log('email and password', email, password);
+        signIn(email, password)
+            .then(result => {
+                console.log(result.user);
+                navigate(from, {replace: true})
+            })
+    }
     return (
         <Container className='w-25 mx-auto'>
-            <Form>
+            <Form onSubmit={handleLogin}>
                 <h2 className='fw-bold my-5 text-center'>Login Your Account</h2>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label className='fw-bold'>Email address</Form.Label>
                     <Form.Control type="email" name='email' placeholder="Enter email" />
-                    <Form.Text className="text-muted">
-                        We'll never share your email with anyone else.
-                    </Form.Text>
+
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -31,10 +47,10 @@ const Login = () => {
                     <Link to='/register'>Register</Link>
                 </Form.Text>
                 <Form.Text className="text-danger">
-                    
+
                 </Form.Text>
                 <Form.Text className="text-success">
-                    
+
                 </Form.Text>
             </Form>
         </Container>

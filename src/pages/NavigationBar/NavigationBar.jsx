@@ -8,7 +8,8 @@ import { Button, Container } from 'react-bootstrap';
 
 
 const NavigationBar = () => {
-    const { user } = useContext(AuthContext)
+    const { user, loggedOut } = useContext(AuthContext);
+
     return (
         <div className='my-4'>
             <Navbar bg="light" expand="lg">
@@ -36,7 +37,7 @@ const NavigationBar = () => {
                         }
                         {
                             user ?
-                                <Button variant="dark">Logout</Button>
+                                <Button onClick={loggedOut} variant="dark">Logout</Button>
                                 :
                                 <Link to="/login"><Button variant="dark">Login</Button></Link>
                         }

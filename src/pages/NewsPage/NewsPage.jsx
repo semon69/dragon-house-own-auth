@@ -6,7 +6,6 @@ import EditorInsight from '../EditorInsight/EditorInsight';
 
 const NewsPage = () => {
     const newsData = useLoaderData();
-    console.log(newsData)
     const { image_url, title, author, details, _id, category_id } = newsData;
     return (
         <div>
